@@ -1,4 +1,5 @@
 import Player from './Player'
+import Npc from './Npc'
 
 
 enum DIRECTION {
@@ -9,5 +10,6 @@ enum DIRECTION {
 }
 export {
 	Player,
+	Npc,
 	DIRECTION
 }

@@ -32,7 +32,6 @@ const stopPlayer = (
 		if(KEYS.includes(key)) player.isMoving = false
 }
 
-
 export {
 	keyInterface,
 	stopPlayer,

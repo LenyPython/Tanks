@@ -1,6 +1,7 @@
 import {keySet1, keySet2} from './constants'
 import {checkPlayerMovement, stopPlayer} from './Logic'
 import {Player} from './Tanks'
+import {Npc} from './Tanks/'
 
 const canvas = document.getElementById('main') as HTMLCanvasElement
 canvas.width = 600
@@ -10,6 +11,8 @@ const ctx = canvas.getContext('2d')
 if(!ctx) throw new Error('Couldn\'t get canvas')
 const player1 = new Player(ctx, canvas, keySet1, 250, 500)
 const player2 = new Player(ctx, canvas, keySet2, 350, 500)
+
+const enemy = new Npc(ctx, canvas, 0, 0)
 
 
 btn?.addEventListener('click', () => {
@@ -30,5 +33,6 @@ const animate = () => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 	player1.draw()
 	player2.draw()
+	enemy.draw()
 	requestAnimationFrame(animate)
 }
