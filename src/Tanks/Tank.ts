@@ -19,7 +19,7 @@ export default class Tank {
 		this.health = health
 		this.isMoving = true
 		this.size = 64
-		this.speed = 10
+		this.speed = 5
 	}
 	move(){
 		if(!this.isMoving) return

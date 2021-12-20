@@ -5,19 +5,19 @@ export default class Game {
 	players: Player[]
 	enemies: Npc[]
 	constructor(
-		private multiplayer: boolean,
 		public ctx: CanvasRenderingContext2D,
-		public canvas: HTMLCanvasElement
+		public canvas: HTMLCanvasElement,
+		multiplayer: boolean
 	){
 		this.ctx = ctx
 		this.canvas = canvas
 		this.players = [new Player(ctx, canvas, keySet1, 250, 500)]
 		if(multiplayer) this.players.push(new Player(ctx, canvas, keySet2, 350, 500))
 		this.enemies = [new Npc(ctx, canvas, 0, 0)]
-		this.canvas.addEventListener('keydown', (e: KeyboardEvent)=>{
+		window.addEventListener('keydown', (e: KeyboardEvent)=>{
 			for(let player of this.players)	this.checkPlayerMovement(e.key, player)
 		})
-		this.canvas.addEventListener('keyup', (e: KeyboardEvent)=>{
+		window.addEventListener('keyup', (e: KeyboardEvent)=>{
 			for(let player of this.players) this.stopPlayer(e.key, player)
 		})
 
@@ -27,7 +27,7 @@ export default class Game {
 	for(let player of this.players) player.draw()
 	for(let enemy of this.enemies) enemy.draw()
 	requestAnimationFrame(()=>this.animate())
-}
+	}
 	checkPlayerMovement(key: string, player: Player){
 			const { UP, DOWN, LEFT, RIGHT } = player.keySet
 			switch(key){
