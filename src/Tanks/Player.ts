@@ -2,15 +2,18 @@ import Tank from './Tank'
 import {DIRECTION} from './index'
 
 export default class Player extends Tank {
-	constructor(ctx, x, y) {
-		super(ctx, x, y)
+	constructor(
+		ctx: CanvasRenderingContext2D,
+		public posX: number,
+		public posY: number) {
+		super(ctx, posX, posY)
 		this.direction = DIRECTION.UP
 	}
-	draw(getRandom) {
-		ctx.beginPath()
-		ctx.strokeStyle = 'blue'
-		ctx.rect(getRandom(), getRandom(), getRandom(), getRandom(),)
-		ctx.stroke()
+	draw(getRandom: ()=>number) {
+		this.ctx.beginPath()
+		this.ctx.strokeStyle = 'blue'
+		this.ctx.rect(getRandom(), getRandom(), getRandom(), getRandom(),)
+		this.ctx.stroke()
 	}
 
 }

@@ -1,11 +1,11 @@
-import Player from 'Player'
+import Player from './Player'
 
 
-const DIRECTION = {
-	"UP": "UP",
-	"DOWN": "DOWN",
-	"LEFT": "LEFT",
-	"RIGHT": "RIGHT"
+enum DIRECTION {
+	UP = "UP",
+	DOWN = "DOWN",
+	LEFT = "LEFT",
+	RIGHT = "RIGHT"
 }
 export {
 	Player,
