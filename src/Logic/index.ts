@@ -4,22 +4,22 @@ import {keyInterface} from '../constants'
 
 const checkPlayerMovement = (
 	key: string,
-	player: Player,
-	keyMap: keyInterface) => {
+	player: Player) => {
+	const { UP, DOWN, LEFT, RIGHT } = player.keySet
 	switch(key){
-		case keyMap.UP:
+		case UP:
 			player.isMoving = true
 			player.direction = DIRECTION.UP
 			break
-		case keyMap.DOWN:
+		case DOWN:
 			player.isMoving = true
 			player.direction = DIRECTION.DOWN
 			break
-		case keyMap.LEFT:
+		case LEFT:
 			player.isMoving = true
 			player.direction = DIRECTION.LEFT
 			break
-		case keyMap.RIGHT:
+		case RIGHT:
 			player.isMoving = true
 			player.direction = DIRECTION.RIGHT
 			break
@@ -27,9 +27,9 @@ const checkPlayerMovement = (
 }
 const stopPlayer = (
 	key: string,
-	player: Player,
-	keyMap: keyInterface) => {
-		if(Object.values(keyMap).includes(key)) player.isMoving = false
+	player: Player) => {
+		const KEYS = Object.values(player.keySet)
+		if(KEYS.includes(key)) player.isMoving = false
 }
 
 

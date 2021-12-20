@@ -8,8 +8,8 @@ canvas.height = 600
 const btn = document.querySelector('button')
 const ctx = canvas.getContext('2d')
 if(!ctx) throw new Error('Couldn\'t get canvas')
-const player1 = new Player(ctx, canvas, 250, 500)
-const player2 = new Player(ctx, canvas, 350, 500)
+const player1 = new Player(ctx, canvas, keySet1, 250, 500)
+const player2 = new Player(ctx, canvas, keySet2, 350, 500)
 
 
 btn?.addEventListener('click', () => {
@@ -18,12 +18,12 @@ btn?.addEventListener('click', () => {
 
 
 window.addEventListener('keydown', (e: KeyboardEvent)=>{
-	checkPlayerMovement(e.key, player1, keySet1)
-	checkPlayerMovement(e.key, player2, keySet2)
+	checkPlayerMovement(e.key, player1)
+	checkPlayerMovement(e.key, player2)
 })
 window.addEventListener('keyup', (e: KeyboardEvent)=>{
-	stopPlayer(e.key, player1, keySet1)
-	stopPlayer(e.key, player2, keySet2)
+	stopPlayer(e.key, player1)
+	stopPlayer(e.key, player2)
 })
 
 const animate = () => {
