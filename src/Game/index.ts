@@ -1,5 +1,7 @@
 import {Npc, Player, DIRECTION} from "../Tanks"
 import {keySet1, keySet2} from '../constants'
+const sprite1 = require('../imgs/Player1.png')
+const sprite2 = require('../imgs/Player2.png')
 
 export default class Game {
 	players: Player[]
@@ -11,8 +13,8 @@ export default class Game {
 	){
 		this.ctx = ctx
 		this.canvas = canvas
-		this.players = [new Player(ctx, canvas, keySet1, 250, 500)]
-		if(multiplayer) this.players.push(new Player(ctx, canvas, keySet2, 350, 500))
+		this.players = [new Player(keySet1, ctx, canvas, sprite1)]
+		if(multiplayer) this.players.push(new Player(keySet2, ctx, canvas, sprite2))
 		this.enemies = [new Npc(ctx, canvas, 0, 0)]
 		window.addEventListener('keydown', (e: KeyboardEvent)=>{
 			for(let player of this.players)	this.checkPlayerMovement(e.key, player)
@@ -23,34 +25,34 @@ export default class Game {
 
 	}
 	animate() {
-	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-	for(let player of this.players) player.draw()
-	for(let enemy of this.enemies) enemy.draw()
-	requestAnimationFrame(()=>this.animate())
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+		for(let player of this.players) player.draw()
+		for(let enemy of this.enemies) enemy.draw()
+		requestAnimationFrame(()=>this.animate())
 	}
 	checkPlayerMovement(key: string, player: Player){
 			const { UP, DOWN, LEFT, RIGHT } = player.keySet
 			switch(key){
 				case UP:
-					player.isMoving = true
-					player.direction = DIRECTION.UP
+					player.sprite.isMoving = true
+					player.sprite.direction = DIRECTION.UP
 					break
 				case DOWN:
-					player.isMoving = true
-					player.direction = DIRECTION.DOWN
+					player.sprite.isMoving = true
+					player.sprite.direction = DIRECTION.DOWN
 					break
 				case LEFT:
-					player.isMoving = true
-					player.direction = DIRECTION.LEFT
+					player.sprite.isMoving = true
+					player.sprite.direction = DIRECTION.LEFT
 					break
 				case RIGHT:
-					player.isMoving = true
-					player.direction = DIRECTION.RIGHT
+					player.sprite.isMoving = true
+					player.sprite.direction = DIRECTION.RIGHT
 					break
 			}
 	}
 	stopPlayer(key: string, player: Player){
 		const KEYS = Object.values(player.keySet)
-		if(KEYS.includes(key)) player.isMoving = false
+		if(KEYS.includes(key)) player.sprite.isMoving = false
 	}
 }

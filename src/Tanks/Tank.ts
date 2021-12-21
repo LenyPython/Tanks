@@ -1,46 +1,35 @@
-import {DIRECTION} from './index'
+import Sprite from '../Sprite'
+
+const enemySprite = require('../imgs/Enemy.png')
+
 
 export default class Tank {
-	isMoving: boolean
-	direction: DIRECTION
-	size: number
-	speed: number
+	sprite: Sprite
 	constructor(
 		protected ctx: CanvasRenderingContext2D, 
-		protected canvas: HTMLCanvasElement, 
-		public posX: number, 
-		public posY: number, 
-		public health = 1) {
+		canvas: HTMLCanvasElement, 
+		x = 0,
+		y = 0
+		) {
 		this.ctx = ctx
-		this.canvas = canvas
-		this.posX = posX
-		this.posY = posY
-		this.direction = DIRECTION.DOWN
-		this.health = health
-		this.isMoving = true
-		this.size = 64
-		this.speed = 5
+		this.sprite = new Sprite(x, y, canvas, enemySprite)
 	}
-	move(){
-		if(!this.isMoving) return
-			switch(this.direction){
-				case DIRECTION.UP:
-					this.posY -= this.speed
-					if(this.posY < 0) this.posY = 0
-					break
-				case DIRECTION.DOWN:
-					this.posY += this.speed
-					if(this.posY + this.size > this.canvas.height) this.posY = this.canvas.width - this.size
-					break
-				case DIRECTION.LEFT:
-					this.posX -= this.speed
-					if(this.posX < 0) this.posX = 0
-					break
-				case DIRECTION.RIGHT:
-					this.posX += this.speed
-					if(this.posX + this.size > this.canvas.width) this.posX = this.canvas.width - this.size
-					break
-			}
+	drawSprite(){
+		this.ctx.drawImage(
+			this.sprite.img, 
+			//how to crop image x px on each frame, y px always 0
+			this.sprite.frame * this.sprite.size, 0,
+			//size of croped img
+			this.sprite.size,
+			this.sprite.size,
+			//start position of drawing
+			this.sprite.posX,
+			this.sprite.posY,
+			//size of drawing
+			this.sprite.size,
+			this.sprite.size,
+			)
+
 	}
 
 

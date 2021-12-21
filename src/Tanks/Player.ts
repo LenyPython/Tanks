@@ -4,21 +4,18 @@ import {keyInterface} from '../constants'
 
 export default class Player extends Tank {
 	constructor(
+		public keySet: keyInterface,
 		ctx: CanvasRenderingContext2D,
 		canvas: HTMLCanvasElement,
-		public keySet: keyInterface,
-		public posX: number,
-		public posY: number) {
-		super(ctx, canvas, posX, posY)
-		this.isMoving = false
+		src: string) {
+		super(ctx, canvas, canvas.width/2 - 100, canvas.height - 60)
+		this.sprite.isMoving = false
 		this.keySet = keySet
-		this.direction = DIRECTION.UP
+		this.sprite.img.src = src
+		this.sprite.direction = DIRECTION.UP
 	}
 	draw() {
-		this.move()
-		this.ctx.beginPath()
-		this.ctx.strokeStyle = 'blue'
-		this.ctx.rect(this.posX, this.posY, this.size, this.size)
-		this.ctx.stroke()
+		this.sprite.move()
+		this.drawSprite()
 	}
 }
