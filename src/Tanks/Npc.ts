@@ -13,8 +13,7 @@ export default class Npc extends Tank {
 		this.interval = 500
 		this.lastInterval = Date.now()
 	}
-	draw() {
-		const timeNow = Date.now()
+	draw(timeNow: number) {
 		if(this.lastInterval + this.interval < timeNow){
 			this.changeMovement()
 			this.lastInterval = timeNow

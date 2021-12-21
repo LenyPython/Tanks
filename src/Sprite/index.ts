@@ -4,7 +4,6 @@ export default class Sprite{
 	size: number
 	isMoving: boolean
 	direction: DIRECTION
-	speed: number
 	img: HTMLImageElement
 	frame: number
 	constructor (
@@ -12,7 +11,8 @@ export default class Sprite{
 		public posY: number, 
 		public canvas: HTMLCanvasElement,
 		public src: string,
-		public health = 1
+		public health = 1,
+		public speed = 5
 	){
 		this.posX = posX
 		this.posY = posY
@@ -23,7 +23,7 @@ export default class Sprite{
 		this.direction = DIRECTION.DOWN
 		this.health = health
 		this.isMoving = true
-		this.speed = 5
+		this.speed = speed
 	}
 	move(){
 		if(!this.isMoving) return

@@ -6,11 +6,15 @@ const sprite2 = require('../imgs/Player2.png')
 export default class Game {
 	players: Player[]
 	enemies: Npc[]
+	lastFrame: number
+	FPS: number
 	constructor(
 		public ctx: CanvasRenderingContext2D,
 		public canvas: HTMLCanvasElement,
 		multiplayer: boolean
 	){
+		this.lastFrame = Date.now()
+		this.FPS = 20
 		this.ctx = ctx
 		this.canvas = canvas
 		this.players = [new Player(keySet1, ctx, canvas, sprite1)]
@@ -25,9 +29,13 @@ export default class Game {
 
 	}
 	animate() {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		for(let player of this.players) player.draw()
-		for(let enemy of this.enemies) enemy.draw()
+		let timeNow = Date.now()
+		if(timeNow - this.lastFrame >= this.FPS){
+			this.lastFrame = timeNow
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			for(let player of this.players) player.draw()
+			for(let enemy of this.enemies) enemy.draw(timeNow)
+		}
 		requestAnimationFrame(()=>this.animate())
 	}
 	checkPlayerMovement(key: string, player: Player){

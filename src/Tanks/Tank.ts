@@ -5,6 +5,7 @@ const enemySprite = require('../imgs/Enemy.png')
 
 export default class Tank {
 	sprite: Sprite
+	maxFrame: number
 	constructor(
 		protected ctx: CanvasRenderingContext2D, 
 		canvas: HTMLCanvasElement, 
@@ -12,9 +13,13 @@ export default class Tank {
 		y = 0
 		) {
 		this.ctx = ctx
+		this.maxFrame = 2
 		this.sprite = new Sprite(x, y, canvas, enemySprite)
 	}
 	drawSprite(){
+		if(this.sprite.isMoving) this.sprite.frame++
+		if(this.sprite.frame > this.maxFrame) this.sprite.frame = 0
+
 		this.ctx.drawImage(
 			this.sprite.img, 
 			//how to crop image x px on each frame, y px always 0
