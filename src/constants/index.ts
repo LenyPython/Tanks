@@ -11,14 +11,14 @@ const keySet1: keyInterface = {
 	DOWN: 's',
 	LEFT: 'a',
 	RIGHT: 'd',
-	FIRE: 'f'
+	FIRE: 'v'
 }
 const keySet2: keyInterface = {
 	UP: 'i',
 	DOWN: 'k',
 	LEFT: 'j',
 	RIGHT: 'l',
-	FIRE: ';'
+	FIRE: 'b'
 }
 
 export {

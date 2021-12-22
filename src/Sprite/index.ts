@@ -1,9 +1,7 @@
 import {DIRECTION} from '../Tanks'
 
 export default class Sprite{
-	size: number
 	isMoving: boolean
-	direction: DIRECTION
 	img: HTMLImageElement
 	frame: number
 	constructor (
@@ -11,17 +9,17 @@ export default class Sprite{
 		public posY: number, 
 		public canvas: HTMLCanvasElement,
 		public src: string,
-		public health = 1,
-		public speed = 5
+		public size = 45,
+		public speed = 5,
+		public direction = DIRECTION.DOWN
 	){
 		this.posX = posX
 		this.posY = posY
 		this.frame = 0
 		this.img = new Image()
 		this.img.src = src
-		this.size = 45
-		this.direction = DIRECTION.DOWN
-		this.health = health
+		this.size = size
+		this.direction = direction
 		this.isMoving = true
 		this.speed = speed
 	}
