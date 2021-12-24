@@ -1,10 +1,13 @@
-import {DIRECTION} from '.'
+import Bullet from '../Bullet'
 import Movable from '../GameObjects/Moveable'
+import {DIRECTION} from '.'
 
 const enemySprite = require('../imgs/Enemy.png')
 
 
 export default class Tank extends Movable {
+	bullets: Bullet[]
+	maxBullets: number
 	maxFrame: number
 	constructor(
 		protected ctx: CanvasRenderingContext2D, 
@@ -14,11 +17,12 @@ export default class Tank extends Movable {
 		public direction: DIRECTION,
 		public src = enemySprite,
 		public size = 45,
-		public speed = 5
 		) {
-		super(ctx, canvas, posX, posY, size, speed, direction, src)
+		super(ctx, canvas, posX, posY, direction, src, size)
 		this.ctx = ctx
 		this.maxFrame = 2
+		this.maxBullets = 2
+		this.bullets = []
 	}
 	drawTank(){
 		this.move()
@@ -51,6 +55,47 @@ export default class Tank extends Movable {
 			this.size,
 			this.size,
 			)
-}
+	}
+	fireBullet() {
+			let X = 0, Y = 0
+			if(this.direction === DIRECTION.UP) {
+				X = this.posX + this.size / 2 - 3
+				Y = this.posY
+			}
+			if(this.direction === DIRECTION.DOWN) {
+				X = this.posX + this.size / 2 - 3
+				Y = this.posY + this.size
+			}
+			if(this.direction === DIRECTION.LEFT) {
+				X = this.posX
+				Y = this.posY + this.size / 2 - 3
+			}
+			if(this.direction === DIRECTION.RIGHT) {
+				X = this.posX + this.size
+				Y = this.posY + this.size / 2 - 3
+			}
+			this.bullets.push( new Bullet(
+				this.ctx,
+				this.canvas,
+				X,
+				Y,
+				this.direction,
+		)
+									 )
+	}
+	manageBullets() {
+		for(let i = 0; i < this.bullets.length; i++){
+			const bullet = this.bullets[i]
+			bullet.drawBullet()
+			const isBulletOutOfBounds = (
+				bullet.posX <= 0 || 
+				bullet.posX >= this.canvas.width - bullet.size ||
+				bullet.posY <= 0 ||
+				bullet.posY >= this.canvas.height - bullet.size
+			)
+			if(isBulletOutOfBounds) this.bullets.splice(i,1)
 
+		}
+
+	}
 }

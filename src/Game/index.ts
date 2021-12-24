@@ -30,7 +30,10 @@ export default class Game {
 				player.drawTank()
 				player.manageBullets()
 			}
-			for(let enemy of this.enemies) enemy.drawNPC(timeNow)
+			for(let enemy of this.enemies) {
+				enemy.drawNPC(timeNow)
+				enemy.manageBullets()
+			}
 		}
 		requestAnimationFrame(()=>this.animate())
 	}

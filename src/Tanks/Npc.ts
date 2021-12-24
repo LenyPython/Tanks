@@ -2,8 +2,10 @@ import {DIRECTION} from "."
 import Tank from "./Tank"
 
 export default class Npc extends Tank {
-	interval: number
-	lastInterval: number
+	moveInterval: number
+	shootInterval: number
+	lastMoveInterval: number
+	lastShootInterval: number
 	constructor(
 		ctx: CanvasRenderingContext2D,
 		canvas: HTMLCanvasElement,
@@ -12,15 +14,25 @@ export default class Npc extends Tank {
 		public direction = DIRECTION.DOWN,
 		src = require('../imgs/Enemy.png')) {
 		super(ctx, canvas, posX, posY, direction, src)
-		this.interval = 500
-		this.lastInterval = Date.now()
+		this.moveInterval = 500
+		this.shootInterval = 1500
+		this.lastMoveInterval = Date.now()
+		this.lastShootInterval = Date.now()
 	}
 	drawNPC(timeNow: number) {
-		if(this.lastInterval + this.interval < timeNow){
+		if(this.lastMoveInterval + this.moveInterval < timeNow){
 			this.changeMovement()
-			this.lastInterval = timeNow
+			this.lastMoveInterval = timeNow
 		}
-		this.move()
+		const isFireBulletAvailable = (
+		this.lastShootInterval + this.shootInterval < timeNow &&
+		this.bullets.length < this.maxBullets
+		)
+		if(isFireBulletAvailable){
+			this.fireBullet()
+			this.shootInterval = Math.random() * 3000
+			this.lastShootInterval = timeNow
+		}
 		this.drawTank()
 	}
 	changeMovement(){
@@ -31,5 +43,4 @@ export default class Npc extends Tank {
 		else if(dir >= 0.25) this.direction = DIRECTION.LEFT
 		else this.direction = DIRECTION.RIGHT
 	}
-
 }

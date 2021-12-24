@@ -14,7 +14,7 @@ export default class Bullet extends Movable{
 		public speed = 15,
 		src = bulletSprite
 	){
-		super(ctx, canvas, posX, posY, size, speed, direction, src)
+		super(ctx, canvas, posX, posY, direction, src, size, speed)
 	}
 	drawBullet(){
 		this.move()
