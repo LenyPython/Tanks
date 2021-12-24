@@ -15,13 +15,13 @@ export default class Npc extends Tank {
 		this.interval = 500
 		this.lastInterval = Date.now()
 	}
-	draw(timeNow: number) {
+	drawNPC(timeNow: number) {
 		if(this.lastInterval + this.interval < timeNow){
 			this.changeMovement()
 			this.lastInterval = timeNow
 		}
 		this.move()
-		this.drawMovable()
+		this.drawTank()
 	}
 	changeMovement(){
 		this.isMoving = Math.random() > 0.25 ? true : false

@@ -26,8 +26,11 @@ export default class Game {
 		if(timeNow - this.lastFrame >= this.FPS){
 			this.lastFrame = timeNow
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			for(let player of this.players) player.draw()
-			for(let enemy of this.enemies) enemy.draw(timeNow)
+			for(let player of this.players) {
+				player.drawTank()
+				player.manageBullets()
+			}
+			for(let enemy of this.enemies) enemy.drawNPC(timeNow)
 		}
 		requestAnimationFrame(()=>this.animate())
 	}
@@ -54,7 +57,7 @@ createGame(multiplayer: boolean){
 			this.ctx,
 			this.canvas, 0, 0))
 		window.addEventListener('keydown', (e: KeyboardEvent)=>{
-			for(let player of this.players)	player.checkPlayerMovement(e.key)
+			for(let player of this.players)	player.checkKeyPress(e.key)
 		})
 		window.addEventListener('keyup', (e: KeyboardEvent)=>{
 			for(let player of this.players) player.stopPlayer(e.key)
