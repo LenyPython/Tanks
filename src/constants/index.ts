@@ -13,6 +13,7 @@ const keySet1: keyInterface = {
 	RIGHT: 'd',
 	FIRE: 'v'
 }
+
 const keySet2: keyInterface = {
 	UP: 'i',
 	DOWN: 'k',

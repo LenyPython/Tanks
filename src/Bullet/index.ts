@@ -1,27 +1,19 @@
-import Sprite from "../Sprite";
+import Movable from "../GameObjects/Moveable";
 import {DIRECTION} from "../Tanks";
 
 const bulletSprite = require('../imgs/Bullet.png')
 
-export default class Bullet{
-	sprite: Sprite
+export default class Bullet extends Movable{
 	constructor(
+		public ctx: CanvasRenderingContext2D,
 		public posX: number, 
 		public posY: number, 
 		public canvas: HTMLCanvasElement,
-		public src: string,
 		public direction: DIRECTION,
-		public size = 9,
-		public speed = 9
+		public size = 5,
+		public speed = 9,
+		src = bulletSprite
 	){
-		this.sprite = new Sprite(
-				posX,
-				posY,
-				canvas,
-				bulletSprite,
-				size,
-				speed,
-				direction
-		)
+		super(ctx, canvas, posX, posY, size, speed, direction, src)
 	}
 }

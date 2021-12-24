@@ -17,16 +17,9 @@ export default class Game {
 		this.FPS = 20
 		this.ctx = ctx
 		this.canvas = canvas
-		this.players = [new Player(keySet1, ctx, canvas, sprite1)]
-		if(multiplayer) this.players.push(new Player(keySet2, ctx, canvas, sprite2))
-		this.enemies = [new Npc(ctx, canvas, 0, 0)]
-		window.addEventListener('keydown', (e: KeyboardEvent)=>{
-			for(let player of this.players)	this.checkPlayerMovement(e.key, player)
-		})
-		window.addEventListener('keyup', (e: KeyboardEvent)=>{
-			for(let player of this.players) this.stopPlayer(e.key, player)
-		})
-
+		this.players = []
+		this.enemies = []
+		this.createGame(multiplayer)
 	}
 	animate() {
 		let timeNow = Date.now()
@@ -42,25 +35,55 @@ export default class Game {
 			const { UP, DOWN, LEFT, RIGHT } = player.keySet
 			switch(key){
 				case UP:
-					player.sprite.isMoving = true
-					player.sprite.direction = DIRECTION.UP
+					player.isMoving = true
+					player.direction = DIRECTION.UP
 					break
 				case DOWN:
-					player.sprite.isMoving = true
-					player.sprite.direction = DIRECTION.DOWN
+					player.isMoving = true
+					player.direction = DIRECTION.DOWN
 					break
 				case LEFT:
-					player.sprite.isMoving = true
-					player.sprite.direction = DIRECTION.LEFT
+					player.isMoving = true
+					player.direction = DIRECTION.LEFT
 					break
 				case RIGHT:
-					player.sprite.isMoving = true
-					player.sprite.direction = DIRECTION.RIGHT
+					player.isMoving = true
+					player.direction = DIRECTION.RIGHT
 					break
 			}
 	}
 	stopPlayer(key: string, player: Player){
 		const KEYS = Object.values(player.keySet)
-		if(KEYS.includes(key)) player.sprite.isMoving = false
+		if(KEYS.includes(key)) player.isMoving = false
 	}
+createGame(multiplayer: boolean){
+		this.players.push(new Player(
+			keySet1,
+		this.ctx,
+		this.canvas,
+		this.canvas.width/2 - 100,
+		this.canvas.height - 100,
+		DIRECTION.UP,
+		sprite1		
+		))
+		if(multiplayer) this.players.push(new Player(
+		keySet2,
+		this.ctx,
+		this.canvas,
+		this.canvas.width/2 + 100,
+		this.canvas.height - 100,
+		DIRECTION.UP,
+		sprite2
+		))
+		this.enemies.push(new Npc(
+			this.ctx,
+			this.canvas, 0, 0))
+		window.addEventListener('keydown', (e: KeyboardEvent)=>{
+			for(let player of this.players)	this.checkPlayerMovement(e.key, player)
+		})
+		window.addEventListener('keyup', (e: KeyboardEvent)=>{
+			for(let player of this.players) this.stopPlayer(e.key, player)
+		})
+
+}
 }

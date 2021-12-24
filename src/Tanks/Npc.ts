@@ -8,8 +8,10 @@ export default class Npc extends Tank {
 		ctx: CanvasRenderingContext2D,
 		canvas: HTMLCanvasElement,
 		posX: number,
-		posY: number) {
-		super(ctx, canvas, posX, posY)
+		posY: number,
+		public direction = DIRECTION.DOWN,
+		src = require('../imgs/Enemy.png')) {
+		super(ctx, canvas, posX, posY, direction, src)
 		this.interval = 500
 		this.lastInterval = Date.now()
 	}
@@ -18,16 +20,16 @@ export default class Npc extends Tank {
 			this.changeMovement()
 			this.lastInterval = timeNow
 		}
-		this.sprite.move()
-		this.drawSprite()
+		this.move()
+		this.drawMovable()
 	}
 	changeMovement(){
-		this.sprite.isMoving = Math.random() > 0.25 ? true : false
+		this.isMoving = Math.random() > 0.25 ? true : false
 		let dir = Math.random()
-		if(dir >= 0.75) this.sprite.direction = DIRECTION.UP
-		else if(dir >= 0.50) this.sprite.direction = DIRECTION.DOWN
-		else if(dir >= 0.25) this.sprite.direction = DIRECTION.LEFT
-		else this.sprite.direction = DIRECTION.RIGHT
+		if(dir >= 0.75) this.direction = DIRECTION.UP
+		else if(dir >= 0.50) this.direction = DIRECTION.DOWN
+		else if(dir >= 0.25) this.direction = DIRECTION.LEFT
+		else this.direction = DIRECTION.RIGHT
 	}
 
 }
