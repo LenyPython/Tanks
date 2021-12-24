@@ -31,31 +31,6 @@ export default class Game {
 		}
 		requestAnimationFrame(()=>this.animate())
 	}
-	checkPlayerMovement(key: string, player: Player){
-			const { UP, DOWN, LEFT, RIGHT } = player.keySet
-			switch(key){
-				case UP:
-					player.isMoving = true
-					player.direction = DIRECTION.UP
-					break
-				case DOWN:
-					player.isMoving = true
-					player.direction = DIRECTION.DOWN
-					break
-				case LEFT:
-					player.isMoving = true
-					player.direction = DIRECTION.LEFT
-					break
-				case RIGHT:
-					player.isMoving = true
-					player.direction = DIRECTION.RIGHT
-					break
-			}
-	}
-	stopPlayer(key: string, player: Player){
-		const KEYS = Object.values(player.keySet)
-		if(KEYS.includes(key)) player.isMoving = false
-	}
 createGame(multiplayer: boolean){
 		this.players.push(new Player(
 			keySet1,
@@ -79,10 +54,10 @@ createGame(multiplayer: boolean){
 			this.ctx,
 			this.canvas, 0, 0))
 		window.addEventListener('keydown', (e: KeyboardEvent)=>{
-			for(let player of this.players)	this.checkPlayerMovement(e.key, player)
+			for(let player of this.players)	player.checkPlayerMovement(e.key)
 		})
 		window.addEventListener('keyup', (e: KeyboardEvent)=>{
-			for(let player of this.players) this.stopPlayer(e.key, player)
+			for(let player of this.players) player.stopPlayer(e.key)
 		})
 
 }

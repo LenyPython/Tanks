@@ -3,6 +3,7 @@ import {DIRECTION} from './index'
 import {keyInterface} from '../constants'
 
 export default class Player extends Tank {
+	keyPressed: Set<string>
 	constructor(
 		public keySet: keyInterface,
 		protected ctx: CanvasRenderingContext2D, 
@@ -17,9 +18,39 @@ export default class Player extends Tank {
 		this.isMoving = false
 		this.sprite.img.src = src
 		this.direction = DIRECTION.UP
+		this.keyPressed = new Set()
 	}
 	draw() {
 		this.move()
 		this.drawMovable()
+	}
+	checkPlayerMovement(key: string){
+			const { UP, DOWN, LEFT, RIGHT } = this.keySet
+			switch(key.toLowerCase()){
+				case UP:
+					this.isMoving = true
+					this.direction = DIRECTION.UP
+					this.keyPressed.add(UP)
+					break
+				case DOWN:
+					this.isMoving = true
+					this.direction = DIRECTION.DOWN
+					this.keyPressed.add(DOWN)
+					break
+				case LEFT:
+					this.isMoving = true
+					this.direction = DIRECTION.LEFT
+					this.keyPressed.add(LEFT)
+					break
+				case RIGHT:
+					this.isMoving = true
+					this.direction = DIRECTION.RIGHT
+					this.keyPressed.add(RIGHT)
+					break
+			}
+	}
+	stopPlayer(key: string){
+		this.keyPressed.delete(key.toLowerCase())
+		if(this.keyPressed.size === 0) this.isMoving = false
 	}
 }
