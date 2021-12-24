@@ -1,6 +1,7 @@
 import Bullet from '../Bullet'
 import Movable from '../GameObjects/Moveable'
 import {DIRECTION} from '.'
+import GameObject from '../GameObjects/GameObject'
 
 const enemySprite = require('../imgs/Enemy.png')
 
@@ -83,7 +84,7 @@ export default class Tank extends Movable {
 		)
 									 )
 	}
-	manageBullets() {
+	manageBullets(tanks: Tank[]) {
 		for(let i = 0; i < this.bullets.length; i++){
 			const bullet = this.bullets[i]
 			bullet.drawBullet()
@@ -94,8 +95,6 @@ export default class Tank extends Movable {
 				bullet.posY >= this.canvas.height - bullet.size
 			)
 			if(isBulletOutOfBounds) this.bullets.splice(i,1)
-
 		}
-
 	}
 }

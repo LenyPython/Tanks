@@ -1,4 +1,5 @@
 import {DIRECTION} from "."
+import Bullet from "../Bullet"
 import Tank from "./Tank"
 
 export default class Npc extends Tank {
@@ -6,6 +7,7 @@ export default class Npc extends Tank {
 	shootInterval: number
 	lastMoveInterval: number
 	lastShootInterval: number
+	bullets: Bullet[]
 	constructor(
 		ctx: CanvasRenderingContext2D,
 		canvas: HTMLCanvasElement,
@@ -18,19 +20,15 @@ export default class Npc extends Tank {
 		this.shootInterval = 1500
 		this.lastMoveInterval = Date.now()
 		this.lastShootInterval = Date.now()
+		this.bullets = []
 	}
 	drawNPC(timeNow: number) {
 		if(this.lastMoveInterval + this.moveInterval < timeNow){
 			this.changeMovement()
 			this.lastMoveInterval = timeNow
 		}
-		const isFireBulletAvailable = (
-		this.lastShootInterval + this.shootInterval < timeNow &&
-		this.bullets.length < this.maxBullets
-		)
-		if(isFireBulletAvailable){
+		if(this.lastShootInterval + this.shootInterval < timeNow){
 			this.fireBullet()
-			this.shootInterval = Math.random() * 3000
 			this.lastShootInterval = timeNow
 		}
 		this.drawTank()

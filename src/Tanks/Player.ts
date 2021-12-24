@@ -1,9 +1,12 @@
 import Tank from './Tank'
+import Bullet from '../Bullet'
 import {DIRECTION} from './index'
 import {keyInterface} from '../constants'
 
 export default class Player extends Tank {
 	keyPressed: Set<string>
+	maxBullets: number
+	bullets: Bullet[]
 	constructor(
 		public keySet: keyInterface,
 		protected ctx: CanvasRenderingContext2D, 
@@ -18,6 +21,8 @@ export default class Player extends Tank {
 		this.isMoving = false
 		this.sprite.img.src = src
 		this.direction = DIRECTION.UP
+		this.maxBullets = 1
+		this.bullets = []
 		this.keyPressed = new Set()
 	}
 	checkKeyPress(key: string){
@@ -47,7 +52,6 @@ export default class Player extends Tank {
 					break
 			}
 	}
-
 	stopPlayer(key: string){
 		this.keyPressed.delete(key.toLowerCase())
 		if(this.keyPressed.size === 0) this.isMoving = false

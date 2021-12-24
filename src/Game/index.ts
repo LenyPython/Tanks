@@ -28,11 +28,11 @@ export default class Game {
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 			for(let player of this.players) {
 				player.drawTank()
-				player.manageBullets()
+				player.manageBullets(this.enemies)
 			}
 			for(let enemy of this.enemies) {
 				enemy.drawNPC(timeNow)
-				enemy.manageBullets()
+				enemy.manageBullets(this.players)
 			}
 		}
 		requestAnimationFrame(()=>this.animate())
