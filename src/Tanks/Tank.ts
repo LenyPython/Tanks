@@ -87,6 +87,13 @@ export default class Tank extends Movable {
 	manageBullets(tanks: Tank[]) {
 		for(let i = 0; i < this.bullets.length; i++){
 			const bullet = this.bullets[i]
+			for(let j = 0; j < tanks.length; j++){
+				const tank = tanks[j]
+				if(this.checkCollision(bullet, tank)){
+					this.bullets.splice(i,1)
+					tanks.splice(j,1)
+				}
+			}
 			bullet.drawBullet()
 			const isBulletOutOfBounds = (
 				bullet.posX <= 0 || 
@@ -96,5 +103,13 @@ export default class Tank extends Movable {
 			)
 			if(isBulletOutOfBounds) this.bullets.splice(i,1)
 		}
+	}
+	checkCollision(obj1: GameObject, obj2: GameObject){
+		const xAxisCol = (obj1.posX < obj2.posX + obj2.size &&
+								obj2.posX < obj1.posX + obj1.size)
+		const yAxisCol = (obj1.posY < obj2.posY + obj2.size &&
+								obj2.posY < obj1.posY + obj1.size)
+		return xAxisCol && yAxisCol
+
 	}
 }
