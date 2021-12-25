@@ -4,6 +4,7 @@ import {DIRECTION} from './index'
 import {keyInterface} from '../constants'
 
 export default class Player extends Tank {
+	score: number
 	keyPressed: Set<string>
 	maxBullets: number
 	bullets: Bullet[]
@@ -17,11 +18,12 @@ export default class Player extends Tank {
 		public src: string,
 		) {
 		super(ctx, canvas, posX, posY, DIRECTION.UP, src)
+		this.score = 0
 		this.keySet = keySet
 		this.isMoving = false
 		this.sprite.img.src = src
 		this.direction = DIRECTION.UP
-		this.maxBullets = 1
+		this.maxBullets = 2
 		this.bullets = []
 		this.keyPressed = new Set()
 	}

@@ -1,17 +1,22 @@
 import Game from './Game'
 
 const canvas = document.getElementById('main') as HTMLCanvasElement
+const scoreDisplay = document.getElementById('score')
 canvas.width = 600
 canvas.height = 600
-const btn = document.querySelector('button')
+const singleBtn = document.getElementById('single')
+const multiBtn = document.getElementById('multi')
 const ctx = canvas.getContext('2d')
 if(!ctx) throw new Error('Couldn\'t get canvas')
+if(!scoreDisplay) throw new Error('Coudn\'t get scoreboard')
 
-let MULTIPLAYER = true
-let GAME = new Game(ctx, canvas, MULTIPLAYER)
 
-btn?.addEventListener('click', () => {
-		GAME = new Game(ctx, canvas, MULTIPLAYER)
+singleBtn?.addEventListener('click', () => {
+		const GAME = new Game(ctx, canvas, scoreDisplay, false)
+		GAME.animate()
+})
+multiBtn?.addEventListener('click', () => {
+		const GAME = new Game(ctx, canvas, scoreDisplay, true)
 		GAME.animate()
 })
 

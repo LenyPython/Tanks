@@ -6,6 +6,7 @@ const sprite1 = require('../imgs/Player1.png')
 const sprite2 = require('../imgs/Player2.png')
 
 export default class Game {
+	score: number
 	players: Player[]
 	enemies: Npc[]
 	lastFrame: number
@@ -16,9 +17,11 @@ export default class Game {
 	constructor(
 		public ctx: CanvasRenderingContext2D,
 		public canvas: HTMLCanvasElement,
+		public scoreDisplay: HTMLSpanElement,
 		multiplayer: boolean
 	){
 		this.lastFrame = Date.now()
+		this.score = 0
 		this.FPS = 20
 		this.ctx = ctx
 		this.canvas = canvas
@@ -35,14 +38,16 @@ export default class Game {
 			if(this.enemies.length < this.players.length + 3)	this.spawner.spawnEnemy(this.ctx, this.canvas, timeNow)
 			this.lastFrame = timeNow
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			for(let player of this.players) {
+			for(let i = 0; i < this.players.length; i++) {
+				const player = this.players[i]
 				player.drawTank()
-				player.manageBullets(this.enemies)
+				this.score += player.manageBullets(this.enemies)
 			}
 			for(let enemy of this.enemies) {
 				enemy.drawNPC(timeNow)
 				enemy.manageBullets(this.players)
 			}
+			this.scoreDisplay.innerText = this.score.toString()
 		}
 		requestAnimationFrame(()=>this.animate())
 	}

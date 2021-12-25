@@ -22,7 +22,7 @@ export default class Tank extends Movable {
 		super(ctx, canvas, posX, posY, direction, src, size)
 		this.ctx = ctx
 		this.maxFrame = 2
-		this.maxBullets = 2
+		this.maxBullets = 3
 		this.bullets = []
 	}
 	drawTank(){
@@ -58,6 +58,7 @@ export default class Tank extends Movable {
 			)
 	}
 	fireBullet() {
+			if(this.bullets.length >= this.maxBullets) return
 			let X = 0, Y = 0
 			if(this.direction === DIRECTION.UP) {
 				X = this.posX + this.size / 2 - 3
@@ -75,16 +76,18 @@ export default class Tank extends Movable {
 				X = this.posX + this.size
 				Y = this.posY + this.size / 2 - 3
 			}
-			this.bullets.push( new Bullet(
-				this.ctx,
-				this.canvas,
-				X,
-				Y,
-				this.direction,
-		)
-									 )
+			this.bullets.push(
+				new Bullet(
+					this.ctx,
+					this.canvas,
+					X,
+					Y,
+					this.direction,
+					)
+											 )
 	}
 	manageBullets(tanks: Tank[]) {
+		let hits = 0
 		for(let i = 0; i < this.bullets.length; i++){
 			const bullet = this.bullets[i]
 			bullet.drawBullet()
@@ -102,14 +105,16 @@ export default class Tank extends Movable {
 					}
 				}
 				if(this.checkCollision(bullet, tank)){
+					hits += 5
 					this.bullets.splice(i,1)
 					tanks.splice(j,1)
 					i--
 					j--
 				}
 			}
-	if(this.checkIsInBounds(bullet)) this.bullets.splice(i,1)
+		if(this.checkIsInBounds(bullet)) this.bullets.splice(i,1)
 		}
+		return hits
 	}
 	checkIsInBounds(bullet: Bullet){
 		return (
