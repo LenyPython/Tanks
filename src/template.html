@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-	<base href='.'>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="logo.svg">
-	<title>Tanks</title>
-	<link rel='stylesheet' href='style.css' />
+	<title>
+		<%= htmlWebpackPlugin.options.title %>
+	</title>
 </head>
-<script type="module" src="script.js" defer></script>
 
 <body>
 
@@ -16,8 +15,8 @@
 		<button id='single' class='game-start'>1 Player</button>
 		<button id='multi' class='game-start'>2 Players</button>
 	</div>
-	<h1>Score: <span id="score">Start a game</span></h3>
-		<canvas id="main"></canvas>
+	<h1>Score: <span id="score">Start a game</span></h1>
+	<canvas id="main"></canvas>
 
 </body>
 

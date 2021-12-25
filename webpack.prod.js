@@ -9,15 +9,14 @@ module.exports = webpackMerge.merge(common, {
 		main: path.resolve(__dirname, 'src/index.ts')
 	},
 	output: {
-		filename: '[name].[contenthash].js',
+		filename: 'TankPewPew.[contenthash].js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	},
 	plugins: [new HtmlWebpackPlugin({
 		title: "Tanks Pew Pew",
-		filename: 'index.html',
+		filename: "index.html",
 		template: path.resolve(__dirname, 'src/template.html')
-	}
-
-	)]
+	}),
+	]
 });

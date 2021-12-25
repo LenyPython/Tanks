@@ -1,4 +1,6 @@
 import Game from './Game'
+import './imgs/logo.svg'
+import './style.css'
 
 const canvas = document.getElementById('main') as HTMLCanvasElement
 const scoreDisplay = document.getElementById('score')
