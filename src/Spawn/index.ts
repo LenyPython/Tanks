@@ -16,8 +16,8 @@ export default class Spawn {
 		canvas: HTMLCanvasElement,
 		timeNow: number){
 		if(this.lastInterval + this.spawnInterval < timeNow){
-			const X = Math.floor(Math.random() * canvas.width-50) +25
-			const Y = 10
+			const X = Math.floor(Math.random() * canvas.width - 50) + 25
+			const Y = 5
 			this.npcs.push(new Npc(ctx, canvas, X, Y))
 			this.spawnInterval = 2000 + 1000 * this.npcs.length
 			this.lastInterval = timeNow

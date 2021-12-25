@@ -87,29 +87,45 @@ export default class Tank extends Movable {
 	manageBullets(tanks: Tank[]) {
 		for(let i = 0; i < this.bullets.length; i++){
 			const bullet = this.bullets[i]
+			bullet.drawBullet()
+			//check collision for all tanks
 			for(let j = 0; j < tanks.length; j++){
 				const tank = tanks[j]
+				//check collision for all oposing tanks bullets
+				for(let b = 0; b < tank.bullets.length; b++){
+					const tankBullet = tank.bullets[b]
+					if(this.checkCollision(bullet, tankBullet)){
+						this.bullets.splice(i,1)
+						tank.bullets.splice(b,1)
+						i--
+						break
+					}
+				}
 				if(this.checkCollision(bullet, tank)){
 					this.bullets.splice(i,1)
 					tanks.splice(j,1)
+					i--
+					j--
 				}
 			}
-			bullet.drawBullet()
-			const isBulletOutOfBounds = (
+	if(this.checkIsInBounds(bullet)) this.bullets.splice(i,1)
+		}
+	}
+	checkIsInBounds(bullet: Bullet){
+		return (
 				bullet.posX <= 0 || 
 				bullet.posX >= this.canvas.width - bullet.size ||
 				bullet.posY <= 0 ||
 				bullet.posY >= this.canvas.height - bullet.size
 			)
-			if(isBulletOutOfBounds) this.bullets.splice(i,1)
-		}
+
 	}
 	checkCollision(obj1: GameObject, obj2: GameObject){
-		const xAxisCol = (obj1.posX < obj2.posX + obj2.size &&
-								obj2.posX < obj1.posX + obj1.size)
-		const yAxisCol = (obj1.posY < obj2.posY + obj2.size &&
-								obj2.posY < obj1.posY + obj1.size)
-		return xAxisCol && yAxisCol
+		const objectsCollide = (obj1.posX > obj2.posX + obj2.size ||
+														obj2.posX > obj1.posX + obj1.size ||
+														obj1.posY > obj2.posY + obj2.size ||
+														obj2.posY > obj1.posY + obj1.size)
+		return !objectsCollide
 
 	}
 }
