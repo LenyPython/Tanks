@@ -1,5 +1,7 @@
 import {Npc, Player, DIRECTION} from "../Tanks"
 import {keySet1, keySet2} from '../constants'
+import Bullet from "../Bullet"
+import Spawn from "../Spawn"
 const sprite1 = require('../imgs/Player1.png')
 const sprite2 = require('../imgs/Player2.png')
 
@@ -8,6 +10,9 @@ export default class Game {
 	enemies: Npc[]
 	lastFrame: number
 	FPS: number
+	spawner: Spawn
+	playersBullets: Bullet[]
+	enemiesBullets: Bullet[]
 	constructor(
 		public ctx: CanvasRenderingContext2D,
 		public canvas: HTMLCanvasElement,
@@ -19,11 +24,15 @@ export default class Game {
 		this.canvas = canvas
 		this.players = []
 		this.enemies = []
+		this.spawner = new Spawn(this.enemies)
+		this.playersBullets = []
+		this.enemiesBullets = []
 		this.createGame(multiplayer)
 	}
 	animate() {
 		let timeNow = Date.now()
 		if(timeNow - this.lastFrame >= this.FPS){
+			if(this.enemies.length < this.players.length + 3)	this.spawner.spawnEnemy(this.ctx, this.canvas, timeNow)
 			this.lastFrame = timeNow
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 			for(let player of this.players) {
@@ -56,9 +65,6 @@ createGame(multiplayer: boolean){
 		DIRECTION.UP,
 		sprite2
 		))
-		this.enemies.push(new Npc(
-			this.ctx,
-			this.canvas, 0, 0))
 		window.addEventListener('keydown', (e: KeyboardEvent)=>{
 			for(let player of this.players)	player.checkKeyPress(e.key)
 		})

@@ -8,9 +8,10 @@ const ctx = canvas.getContext('2d')
 if(!ctx) throw new Error('Couldn\'t get canvas')
 
 let MULTIPLAYER = true
+let GAME = new Game(ctx, canvas, MULTIPLAYER)
 
 btn?.addEventListener('click', () => {
-		const GAME = new Game(ctx, canvas, MULTIPLAYER)
+		GAME = new Game(ctx, canvas, MULTIPLAYER)
 		GAME.animate()
 })
 
