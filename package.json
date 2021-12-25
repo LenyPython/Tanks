@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --config webpack.dev.js --open"
+    "dev": "webpack-dev-server --config webpack.dev.js --open"
   },
   "devDependencies": {
     "css-loader": "^6.5.1",
