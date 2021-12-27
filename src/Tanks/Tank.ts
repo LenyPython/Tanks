@@ -1,7 +1,8 @@
-import Bullet from '../Bullet'
-import Movable from '../GameObjects/Moveable'
-import {DIRECTION} from '.'
+import Game from '../Game'
 import GameObject from '../GameObjects/GameObject'
+import Movable from '../GameObjects/Moveable'
+import Bullet from '../Bullet'
+import {DIRECTION} from '.'
 
 const enemySprite = require('../imgs/Enemy.png')
 
@@ -11,16 +12,14 @@ export default class Tank extends Movable {
 	maxBullets: number
 	maxFrame: number
 	constructor(
-		protected ctx: CanvasRenderingContext2D, 
-		canvas: HTMLCanvasElement, 
+		protected game: Game,
 		public posX: number,
 		public posY: number,
 		public direction: DIRECTION,
 		public src = enemySprite,
 		public size = 45,
 		) {
-		super(ctx, canvas, posX, posY, direction, src, size)
-		this.ctx = ctx
+		super(game, posX, posY, direction, src, size)
 		this.maxFrame = 2
 		this.maxBullets = 3
 		this.bullets = []
@@ -41,7 +40,7 @@ export default class Tank extends Movable {
 				rotation = 3 * this.size
 				break
 		}
-		this.ctx.drawImage(
+		this.game.ctx.drawImage(
 			this.sprite.img, 
 			//how to crop image x px on each frame, y px always 0
 			this.sprite.frame * this.size,
@@ -78,8 +77,7 @@ export default class Tank extends Movable {
 			}
 			this.bullets.push(
 				new Bullet(
-					this.ctx,
-					this.canvas,
+					this.game,
 					X,
 					Y,
 					this.direction,
@@ -119,9 +117,9 @@ export default class Tank extends Movable {
 	checkIsInBounds(bullet: Bullet){
 		return (
 				bullet.posX <= 0 || 
-				bullet.posX >= this.canvas.width - bullet.size ||
+				bullet.posX >= this.game.canvas.width - bullet.size ||
 				bullet.posY <= 0 ||
-				bullet.posY >= this.canvas.height - bullet.size
+				bullet.posY >= this.game.canvas.height - bullet.size
 			)
 
 	}

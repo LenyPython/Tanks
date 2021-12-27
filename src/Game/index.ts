@@ -35,7 +35,7 @@ export default class Game {
 	animate() {
 		let timeNow = Date.now()
 		if(timeNow - this.lastFrame >= this.FPS){
-			if(this.enemies.length < this.players.length + 3)	this.spawner.spawnEnemy(this.ctx, this.canvas, timeNow)
+			if(this.enemies.length < this.players.length + 3)	this.spawner.spawnEnemy(this, timeNow)
 			this.lastFrame = timeNow
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 			for(let i = 0; i < this.players.length; i++) {
@@ -53,9 +53,8 @@ export default class Game {
 	}
 createGame(multiplayer: boolean){
 		this.players.push(new Player(
-			keySet1,
-		this.ctx,
-		this.canvas,
+		keySet1,
+		this,
 		this.canvas.width/2 - 100,
 		this.canvas.height - 100,
 		DIRECTION.UP,
@@ -63,8 +62,7 @@ createGame(multiplayer: boolean){
 		))
 		if(multiplayer) this.players.push(new Player(
 		keySet2,
-		this.ctx,
-		this.canvas,
+		this,
 		this.canvas.width/2 + 100,
 		this.canvas.height - 100,
 		DIRECTION.UP,

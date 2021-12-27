@@ -1,6 +1,7 @@
-import {DIRECTION} from "."
-import Bullet from "../Bullet"
+import Game from "../Game"
 import Tank from "./Tank"
+import Bullet from "../Bullet"
+import {DIRECTION} from "."
 
 export default class Npc extends Tank {
 	moveInterval: number
@@ -9,13 +10,12 @@ export default class Npc extends Tank {
 	lastShootInterval: number
 	bullets: Bullet[]
 	constructor(
-		ctx: CanvasRenderingContext2D,
-		canvas: HTMLCanvasElement,
+		game: Game,
 		posX: number,
 		posY: number,
 		public direction = DIRECTION.DOWN,
 		src = require('../imgs/Enemy.png')) {
-		super(ctx, canvas, posX, posY, direction, src)
+		super(game, posX, posY, direction, src)
 		this.moveInterval = 500
 		this.shootInterval = 1500
 		this.lastMoveInterval = Date.now()

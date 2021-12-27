@@ -1,12 +1,12 @@
 import GameObject from "./GameObject"
 import {DIRECTION} from '../Tanks'
+import Game from "../Game"
 
 
 export default class Movable extends GameObject {
 	isMoving: boolean
 	constructor(
-		protected ctx: CanvasRenderingContext2D, 
-		public canvas: HTMLCanvasElement,
+		protected game: Game,
 		public posX: number, 
 		public posY: number, 
 		public direction = DIRECTION.DOWN,
@@ -14,7 +14,7 @@ export default class Movable extends GameObject {
 		public size = 45,
 		public speed = 5,
 	){
-		super(ctx, posX, posY, canvas, size, src)
+		super(game, posX, posY, size, src)
 		this.direction = direction
 		this.isMoving = true
 		this.speed = speed
@@ -29,8 +29,8 @@ export default class Movable extends GameObject {
 					break
 				case DIRECTION.DOWN:
 					this.posY += this.speed
-				if(this.posY + this.size >= this.canvas.height){
-				 this.posY = this.canvas.width - this.size
+				if(this.posY + this.size >= this.game.canvas.height){
+				 this.posY = this.game.canvas.width - this.size
 				}
 					break
 				case DIRECTION.LEFT:
@@ -39,8 +39,8 @@ export default class Movable extends GameObject {
 					break
 				case DIRECTION.RIGHT:
 					this.posX += this.speed
-				if(this.posX + this.size >= this.canvas.width){
-					 this.posX = this.canvas.width - this.size
+				if(this.posX + this.size >= this.game.canvas.width){
+					 this.posX = this.game.canvas.width - this.size
 				}
 					break
 			}

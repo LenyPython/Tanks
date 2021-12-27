@@ -5,6 +5,9 @@ const webpackMerge = require('webpack-merge')
 module.exports = webpackMerge.merge(common, {
 	mode: "development",
 	devServer: {
-		port: 3000,
+		static: {
+			directory: path.join(__dirname, 'dist'),
+		},
+		port: 8080,
 	}
 });

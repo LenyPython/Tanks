@@ -1,3 +1,4 @@
+import Game from '../Game'
 import Movable from "../GameObjects/Moveable";
 import {DIRECTION} from "../Tanks";
 
@@ -5,8 +6,7 @@ const bulletSprite = require('../imgs/Bullet.png')
 
 export default class Bullet extends Movable{
 	constructor(
-		public ctx: CanvasRenderingContext2D,
-		public canvas: HTMLCanvasElement,
+		public game: Game,
 		public posX: number, 
 		public posY: number, 
 		public direction: DIRECTION,
@@ -14,7 +14,7 @@ export default class Bullet extends Movable{
 		public speed = 15,
 		src = bulletSprite
 	){
-		super(ctx, canvas, posX, posY, direction, src, size, speed)
+		super(game, posX, posY, direction, src, size, speed)
 	}
 	drawBullet(){
 		this.move()
@@ -30,7 +30,7 @@ export default class Bullet extends Movable{
 				rotation = this.size
 				break
 		}
-		this.ctx.drawImage(
+		this.game.ctx.drawImage(
 			this.sprite.img, 
 			//how to crop image x px on each frame, y px always 0
 			0,

@@ -1,3 +1,4 @@
+import Game from '../Game'
 import Tank from './Tank'
 import Bullet from '../Bullet'
 import {DIRECTION} from './index'
@@ -10,14 +11,13 @@ export default class Player extends Tank {
 	bullets: Bullet[]
 	constructor(
 		public keySet: keyInterface,
-		protected ctx: CanvasRenderingContext2D, 
-		canvas: HTMLCanvasElement, 
+		protected game: Game, 
 		public posX: number,
 		public posY: number,
 		public direction: DIRECTION,
 		public src: string,
 		) {
-		super(ctx, canvas, posX, posY, DIRECTION.UP, src)
+		super(game, posX, posY, DIRECTION.UP, src)
 		this.score = 0
 		this.keySet = keySet
 		this.isMoving = false
